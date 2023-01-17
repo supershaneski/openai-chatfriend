@@ -1,0 +1,74 @@
+@import './base.css';
+
+#app {
+    background-color: green;
+  position: relative;
+  height: 100vh;
+
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+
+button {
+  border-radius: 8px;
+  /*border: 1px solid transparent;*/
+  border: 1px solid var(--color-border);
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  /*background-color: #1a1a1a;*/
+  background-color: transparent;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  color: var(--color-text-green);
+}
+
+button:hover {
+  /*border-color: #646cff;*/
+  border-color: var(--color-text-green);
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+button:disabled {
+  border: 1px solid var(--color-border);
+  color: var(--color-border);
+}
+
+/*@media (prefers-color-scheme: light) {
+  button {
+    background-color: #f9f9f9;
+  }
+}*/
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+/*
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    padding: 0 2rem;
+  }
+}
+*/
