@@ -3,7 +3,7 @@ openai-chatfriend
 
 This project is a chatbox application built using [Nuxt 3](https://nuxt.com/v3) powered by [OpenAI Text completion endpoint](https://beta.openai.com/docs/guides/completion).
 
-In the future, you can select different personality of your AI friend that you want to chat. It will then emulates normal conversation between friends. 
+In the future, you can select different personality of your AI friend that you want to chat. It will then emulate normal conversation between friends. 
 
 The default AI friend will respond in Japanese. You can use this app to practice chatting with a Japanese person!
 
