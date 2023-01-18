@@ -5,6 +5,8 @@ import play from '@/assets/play.svg'
 
 const config = useRuntimeConfig()
 
+const textRef = ref(null)
+
 const siteTitle = ref(config.public.appTitle)
 const inputMessage = ref("")
 const chatMessages = ref([])
@@ -54,6 +56,8 @@ async function speakMessage(msg) {
 
     if(msg.length === 0 || msg == "") return
 
+    if(selectedBot.value === "FIL4") return
+
     const utterThis = new SpeechSynthesisUtterance(msg);
     
     let selectedVoice = selectedBot.value === "US3" ? "Karen" : selectedBot.value === "JPN1" ? "Google 日本語" : "Daniel"
@@ -88,6 +92,8 @@ async function speakMessage(msg) {
 
 async function sendMessage() {
     
+    textRef.value.blur()
+
     const message = inputMessage.value
     inputMessage.value = ""
 
@@ -109,6 +115,8 @@ async function sendMessage() {
         chatMessages.value.push(newFriendItem)
     
         speakMessage(replyMessage)
+
+        textRef.value.focus()
 
     }
 
@@ -154,7 +162,7 @@ function handlePlayClick(n) {
 
             <div class="control">
                 <div class="control-panel">
-                    <textarea class="text-input" @keydown="handleKeyDown($event)" v-model="inputMessage" placeholder="Write message..."></textarea>
+                    <textarea ref="textRef" class="text-input" v-on:keyup.enter="sendMessage" @keydown="handleKeyDown($event)" v-model="inputMessage" placeholder="Write message..."></textarea>
                     <button class="button-send" @click="sendMessage" :disabled="!inputMessage">Send</button>
                 </div>
             </div>

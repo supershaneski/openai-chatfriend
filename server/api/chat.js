@@ -51,13 +51,21 @@ export default defineEventHandler(async (event) => {
     prompt += chatData
 
     // check token count
-    const tokenPrompt = prompt.length / 4
+    const tokenPrompt = parseInt(prompt.length / 4)
     if(tokenPrompt > 1800) {
+
+        /*
+        The actual maximum number of tokens is around 2048 (new models support 4096).
+        But I do not plan to hit it but put the ceiling a bit much lower then remove
+        old messages after it is reached to continue chatting.
+        */
+
+        console.log("maximum!", tokenPrompt)
         
         // remove several lines from stored data
-        let tmpData = chatData.split("\n").filter((d, i) => i > 10)
+        let tmpData = chatData.split("\n").filter((d, i) => i > 20)
         chatData = tmpData.join("\n")
-
+        
     }
     
     let reply = ''
