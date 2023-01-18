@@ -38,6 +38,9 @@ const isPlayEnabled = computed(() => {
 })
 
 function scrollToBottom() {
+
+    console.log("scroll...")
+
     setTimeout(() => {
         chatPanel.value.scrollTop = chatPanel.value.scrollHeight
     }, 200)
@@ -178,6 +181,9 @@ function handlePlayClick(n) {
     box-sizing: border-box;
     overflow-y: hidden;
 }
+.container::-webkit-scrollbar {
+    display: none;
+}
 .main {
     position: fixed;
     bottom: 0;
@@ -185,6 +191,9 @@ function handlePlayClick(n) {
     height: 100%;
     overflow-y: hidden;
     box-sizing: border-box;
+}
+.main::-webkit-scrollbar {
+    display: none;
 }
 .header {
     position: relative;
@@ -229,6 +238,9 @@ function handlePlayClick(n) {
     position: relative;
     height: 100%;
     overflow-y: auto;
+}
+.chat-panel::-webkit-scrollbar {
+    display: none;
 }
 .message {
     margin-bottom: 0.5rem;
