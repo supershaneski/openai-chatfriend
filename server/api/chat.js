@@ -23,10 +23,10 @@ function getPromptDescription(id) {
             desc = 'Chat with AI Friend where your AI Friend respond in Shakespearean, old English.\n\n'
             break;
         case 'US3':
-            desc = 'Chat with AI Friend where your AI Friend respond in cheerful, valley girl, American English.\n\n'
+            desc = 'Chat with AI Friend where your AI Friend respond in cheerful, Valley girl, American English.\n\n'
             break;
         case 'FIL4':
-            desc = 'Chat with AI Friend where your AI Friend respond in cheerful, Taglish.\n\n'
+            desc = 'Chat with AI Friend where your AI Friend respond in cheerful, Filipino.\n\n'
             break;
         default:
     }
