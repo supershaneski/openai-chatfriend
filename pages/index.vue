@@ -19,7 +19,7 @@ onMounted(() => {
 
 })
 
-watch(chatMessages, () => {
+watch(chatMessages.value, () => {
 
     scrollToBottom()
 

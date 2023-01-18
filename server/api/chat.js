@@ -45,8 +45,6 @@ export default defineEventHandler(async (event) => {
 
     let prompt = getPromptDescription(bot)
 
-    console.log(prompt, bot)
-
     chatData += '\n'
     chatData += `You: ${message}`
 
