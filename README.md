@@ -3,9 +3,7 @@ openai-chatfriend
 
 This project is a chatbox application built using [Nuxt 3](https://nuxt.com/v3) powered by [OpenAI Text completion endpoint](https://beta.openai.com/docs/guides/completion).
 
-In the future, you can select different personality of your AI friend that you want to chat. It will then emulate normal conversation between friends. 
-
-The default AI friend will respond in Japanese. You can use this app to practice chatting with a Japanese person!
+You can select different personality of your AI friend that you want to chat. It will then emulate normal conversation between friends. The default AI friend will respond in Japanese. You can use this app to practice chatting with a Japanese person!
 
 このチャットボックスアプリは、`Nuxt 3`を使用して開発され、`OpenAIのテキスト完成エンドポイント`によって動作します。将来的には、AIの個性を選択することが可能になるかもしれません。現在は、デフォルトで日本語で応答します。このアプリを使用することで、日本語のチャットスキルを練習することができます。
 
@@ -14,13 +12,21 @@ The default AI friend will respond in Japanese. You can use this app to practice
 
 # The App
 
-![ChatFriend](./docs/screenshot.png)
+## Japanese (日本語)
+![Japanese](./docs/screenshot1.png)
+
+## Old English
+![Old English](./docs/screenshot2.png)
+
+## American English
+![American English](./docs/screenshot3.png)
+
+## Filipino
+![Filipino](./docs/screenshot4.png)
 
 By writing a descriptive introduction in your prompt, it is possible to create different personality of your AI chat friend. Depending on the availability, the reply will be spoken using [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API).
 
 Moving forward, my main objective is to be able to transcribed speech into text, send it to an AI endpoint (for now `Completion endpoint`, maybe `ChatGPT` in the future), get the result and translate it to text to speech, making a proper `Voice Chat app`. But that is just one application. You can probably stick that app into an actual device, say a robot dog or cat, thus giving them the ability to converse to their owners. Imagine a talking cat! lol
-
-However, the first part, speech to text, seem to be not straight forward and involved some other technology I am not familiar as of this time, well, for now...
 
 > This is purely a personal coding exercise to get to know `Nuxt 3`.
 
