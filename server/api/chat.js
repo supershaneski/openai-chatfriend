@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
     prompt += chatData
 
     // check token count
-    const tokenPrompt = parseInt(prompt.length / 4)
+    const tokenPrompt = parseInt(prompt.length / 4) // we are making simple assumption that 4 chars = 1 token
     if(tokenPrompt > 1800) {
 
         /*
@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
         // remove several lines from stored data
         let tmpData = chatData.split("\n").filter((d, i) => i > 20)
         chatData = tmpData.join("\n")
-        
+
     }
     
     let reply = ''
