@@ -22,11 +22,14 @@ You can select different personality of your AI friend that you want to chat. It
 ![American English](./docs/screenshot3.png)
 
 ## Filipino
+
+> There are no Filipino voice available from `Speech Synthesis` api so the play button is removed.
+
 ![Filipino](./docs/screenshot4.png)
 
 By writing a descriptive introduction in your prompt, it is possible to create different personality of your AI chat friend. Depending on the availability, the reply will be spoken using [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API).
 
-Moving forward, my main objective is to be able to transcribed speech into text, send it to an AI endpoint (for now `Completion endpoint`, maybe `ChatGPT` in the future), get the result and translate it to text to speech, making a proper `Voice Chat app`. But that is just one application. You can probably stick that app into an actual device, say a robot dog or cat, thus giving them the ability to converse to their owners. Imagine a talking cat! lol
+Moving forward, my main objective is to be able to transcribed speech into text (using [Whisper](https://openai.com/blog/whisper/)), send it to an AI endpoint (for now `Completion endpoint`, maybe `ChatGPT` in the future), get the result and translate it to text to speech (using `Web Speech API`), making a proper `Voice Chatbox app`. But that is just one application. You can probably stick a similar app into an actual device, say a robot dog or cat, thus giving them the ability to converse to their owners. Imagine a talking cat! lol
 
 > This is purely a personal coding exercise to get to know `Nuxt 3`.
 
@@ -94,6 +97,15 @@ export default defineEventHandler(async (event) => {
 
 })
 ```
+
+## max_tokens
+
+The `max_tokens` value plus the token count of the prompt should not exceed 2048 (or 4096 for newest models).
+
+In the application, I set my own ceiling much lower (1800 tokens, 1 token = 4 chars).
+If the total token count exceed this number, I removed a number of old messages.
+Since the conversation is already too long, removing previous messages will probably not impact the current flow of conversation.
+
 
 # Setup
 
