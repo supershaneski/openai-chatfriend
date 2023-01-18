@@ -41,6 +41,13 @@ function scrollToBottom() {
     }, 200)
 }
 
+function handleKeyDown(event) {
+    if(inputMessage.value.length > 140) { // twitter old char limit
+        inputMessage.value = inputMessage.value.substr(0, 140)
+        event.preventDefault()
+    }
+}
+
 async function speakMessage(msg) {
 
     if(!synth) return
@@ -101,7 +108,7 @@ async function sendMessage() {
         let newFriendItem = { type: 1, text: replyMessage, dateTime: (new Date()).toISOString() }
         chatMessages.value.push(newFriendItem)
     
-        //speakMessage(replyMessage)
+        speakMessage(replyMessage)
 
     }
 
@@ -147,7 +154,7 @@ function handlePlayClick(n) {
 
             <div class="control">
                 <div class="control-panel">
-                    <textarea class="text-input" v-model="inputMessage" placeholder="Write message..."></textarea>
+                    <textarea class="text-input" @keydown="handleKeyDown($event)" v-model="inputMessage" placeholder="Write message..."></textarea>
                     <button class="button-send" @click="sendMessage" :disabled="!inputMessage">Send</button>
                 </div>
             </div>
