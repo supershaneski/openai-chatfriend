@@ -9,27 +9,32 @@ const siteTitle = ref(config.public.appTitle)
 const inputMessage = ref("")
 const chatMessages = ref([])
 const chatPanel = ref(null)
+const selectedBot = ref('JPN1')
 
 let synth = null
 
-/* lifecycle hooks */
 onMounted(() => {
 
     synth = window.speechSynthesis;
 
 })
 
-/* watch */
-watch(chatMessages.value, () => {
+watch(chatMessages, () => {
+
     scrollToBottom()
+
 })
 
-/* computed */
+watch(selectedBot, () => {
+    
+    chatMessages.value = []
+
+})
+
 const isPlayEnabled = computed(() => {
-    return synth !== null
+    return synth !== null && selectedBot.value !== "FIL4"
 })
 
-/* methods */
 function scrollToBottom() {
     setTimeout(() => {
         chatPanel.value.scrollTop = chatPanel.value.scrollHeight
@@ -44,15 +49,31 @@ async function speakMessage(msg) {
 
     const utterThis = new SpeechSynthesisUtterance(msg);
     
+    let selectedVoice = selectedBot.value === "US3" ? "Karen" : selectedBot.value === "JPN1" ? "Google 日本語" : "Daniel"
+
     const voices = synth.getVoices();
     for (const voice of voices) {
-        if (voice.name === "Google 日本語") {
+        if (voice.name === selectedVoice) {
             utterThis.voice = voice;
         }
     }
 
-    utterThis.pitch = 1.1;
-    utterThis.rate = 1.0;
+    if(selectedBot.value === "JPN1") {
+
+        utterThis.pitch = 1.1;
+        utterThis.rate = 1.0;
+
+    } else if(selectedBot.value === "US3") {
+
+        utterThis.pitch = 1.3;
+        utterThis.rate = 0.8;
+
+    } else {
+
+        utterThis.pitch = 0.9;
+        utterThis.rate = 0.8;
+
+    }
 
     synth.speak(utterThis);
     
@@ -63,20 +84,26 @@ async function sendMessage() {
     const message = inputMessage.value
     inputMessage.value = ""
 
+    const isReset = chatMessages.value.length === 0 ? true : false
+
     let newUserItem = { type: 0, text: message, dateTime: (new Date()).toISOString() }
     chatMessages.value.push(newUserItem)
     
     const response = $fetch('/api/chat', {
         method: 'post',
-        body: { message }
+        body: { message, bot: selectedBot.value, reset: isReset }
     })
     const result = await response
     
     const replyMessage = result.text
-    let newFriendItem = { type: 1, text: result.text, dateTime: (new Date()).toISOString() }
-    chatMessages.value.push(newFriendItem)
+    if(replyMessage) {
+
+        let newFriendItem = { type: 1, text: replyMessage, dateTime: (new Date()).toISOString() }
+        chatMessages.value.push(newFriendItem)
     
-    speakMessage(replyMessage)
+        //speakMessage(replyMessage)
+
+    }
 
 }
 
@@ -93,8 +120,18 @@ function handlePlayClick(n) {
     <div class="container">
         <div class="main">
             <div class="header">
-                <img class="logo" :src="logo" alt="nuxt logo" />
-                <h1 class="header-title">{{ siteTitle }}</h1>
+                <div class="banner">
+                    <img class="logo" :src="logo" alt="nuxt logo" />
+                    <h1 class="header-title">{{ siteTitle }}</h1>
+                </div>
+                <div class="room-select">
+                    <select class="select" v-model="selectedBot">
+                        <option value="JPN1">Japanese (日本語)</option>
+                        <option value="ENG2">Old English</option>
+                        <option value="US3">American English</option>
+                        <option value="FIL4">Filipino</option>
+                    </select>
+                </div>
             </div>
             
             <div class="chat">
@@ -141,16 +178,31 @@ function handlePlayClick(n) {
     justify-content: flex-start;
     align-items: center;
 }
+.banner {
+    display: flex;
+    margin-left: 1rem;
+}
+.room-select {
+    margin-left: 1rem;
+}
+.select {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 3rem;
+    font-size: 1rem;
+    color: var(--color-text-green);
+    height: 2rem;
+    outline: none;
+}
 .header-title {
     font-size: 1.1rem;
-    margin-left: 0.5rem;
     opacity: 0.8;
+    margin-left: 0.5rem;
 }
 .logo {
     position: relative;
     width: 28px;
     height: auto;
-    margin-left: 1rem;
 }
 .chat {
     position: relative;
@@ -214,6 +266,7 @@ function handlePlayClick(n) {
     width: calc(100% - 80px - 1rem);
     background-color: transparent;
     border-color: var(--color-border);
+    border-radius: 0.5rem;
     outline: none;
     padding: 0.5rem;
     box-sizing: border-box;
