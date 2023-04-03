@@ -55,10 +55,13 @@ You can now add more friends, modify prompts and tweak voice settings.
 }
 ```
 
-I also added `NUXT_PUBLIC_APP_MUTED` in the environment variable to globally disable voice/speech function if you want.
+If you do not want the reply message to be spoken after receiving but want to play it later, set the property `mute` to true.
+If you do not wish a friend to have voice/speech function at all, just remove the property `voice`.
+
+I also added `NUXT_PUBLIC_APP_NOVOICE` in the environment variable to globally disable voice/speech function if you want.
 
 ```
-NUXT_PUBLIC_APP_MUTED=false
+NUXT_PUBLIC_APP_NOVOICE=false
 ```
 
 # Development
