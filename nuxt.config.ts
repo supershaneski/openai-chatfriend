@@ -3,7 +3,8 @@ export default defineNuxtConfig({
     runtimeConfig: {
         openaiApiKey: '',
         public: {
-            appTitle: 'ChatFriend'
+            appTitle: 'ChatFriend',
+            appMuted: Boolean(process.env.NUXT_PUBLIC_APP_MUTED) || false,
         }
     },
     css: [

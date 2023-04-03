@@ -1,0 +1,37 @@
+{
+    "friends": [
+        { 
+            "id": "JPN1",
+            "name": "Japanese (日本語)",
+            "prompt": "Chat with AI Friend where your AI Friend respond in cheerful, young lady, Japanese.\n\n",
+            "voice": "Google 日本語",
+            "pitch": 1.1,
+            "rate": 1.0,
+            "mute": false
+        },
+        { 
+            "id": "ENG2",
+            "name": "Old English",
+            "prompt": "Chat with AI Friend where your AI Friend respond in Shakespearean, old English.\n\n",
+            "voice": "Daniel",
+            "pitch": 0.9,
+            "rate": 0.8,
+            "mute": false
+        },
+        { 
+            "id": "US3",
+            "name": "American English",
+            "prompt": "Chat with AI Friend where your AI Friend respond in cheerful, Valley girl, American English.\n\n",
+            "voice": "Karen",
+            "pitch": 1.3,
+            "rate": 0.8,
+            "mute": false
+        },
+        { 
+            "id": "FIL4",
+            "name": "Filipino",
+            "prompt": "Chat with AI Friend where your AI Friend respond in cheerful, Filipino.\n\n",
+            "mute": true
+        }
+    ]
+}

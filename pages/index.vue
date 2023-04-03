@@ -1,4 +1,5 @@
 <script setup>
+import friendList from '../assets/friends-list.json'
 
 import logo from '@/assets/nuxt-icon-primary.svg'
 import play from '@/assets/play.svg'
@@ -34,7 +35,14 @@ watch(selectedBot, () => {
 })
 
 const isPlayEnabled = computed(() => {
-    return synth !== null && selectedBot.value !== "FIL4"
+
+    let globalMute = config.public.appMuted || false
+    if(globalMute) return false
+
+    let friend = friendList.friends.find((item) => item.id === selectedBot.value)
+    if(!friend) return false
+
+    return friend.mute || !(friend?.voice) ? false : true
 })
 
 function scrollToBottom() {
@@ -59,35 +67,25 @@ async function speakMessage(msg) {
 
     if(msg.length === 0 || msg == "") return
 
-    if(selectedBot.value === "FIL4") return
+    let globalMute = config.public.appMuted || false
+    if(globalMute) return
 
-    const utterThis = new SpeechSynthesisUtterance(msg);
+    let friend = friendList.friends.find((item) => item.id === selectedBot.value)
+    if(!friend) return
+
+    if(friend.mute || !(friend?.voice)) return
+
+    const utterThis = new SpeechSynthesisUtterance(msg)
     
-    let selectedVoice = selectedBot.value === "US3" ? "Karen" : selectedBot.value === "JPN1" ? "Google 日本語" : "Daniel"
-
     const voices = synth.getVoices();
     for (const voice of voices) {
-        if (voice.name === selectedVoice) {
+        if (voice.name === friend.voice) {
             utterThis.voice = voice;
         }
     }
 
-    if(selectedBot.value === "JPN1") {
-
-        utterThis.pitch = 1.1;
-        utterThis.rate = 1.0;
-
-    } else if(selectedBot.value === "US3") {
-
-        utterThis.pitch = 1.3;
-        utterThis.rate = 0.8;
-
-    } else {
-
-        utterThis.pitch = 0.9;
-        utterThis.rate = 0.8;
-
-    }
+    utterThis.pitch = friend.pitch || 1.0
+    utterThis.rate = friend.rate || 1.0
 
     synth.speak(utterThis);
     
@@ -116,7 +114,7 @@ async function sendMessage() {
 
         let newFriendItem = { type: 1, text: replyMessage, dateTime: (new Date()).toISOString() }
         chatMessages.value.push(newFriendItem)
-    
+        
         speakMessage(replyMessage)
 
         textRef.value.focus()
@@ -144,10 +142,7 @@ function handlePlayClick(n) {
                 </div>
                 <div class="room-select">
                     <select class="select" v-model="selectedBot">
-                        <option value="JPN1">Japanese (日本語)</option>
-                        <option value="ENG2">Old English</option>
-                        <option value="US3">American English</option>
-                        <option value="FIL4">Filipino</option>
+                        <option v-for="(friend) in friendList.friends" :key="friend.id" :value="friend.id">{{ friend.name }}</option>
                     </select>
                 </div>
             </div>

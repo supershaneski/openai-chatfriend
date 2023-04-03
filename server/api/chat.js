@@ -1,5 +1,7 @@
 import { Configuration, OpenAIApi } from "openai"
 
+import friendList from '../../assets/friends-list.json'
+
 const config = useRuntimeConfig()
 
 const configuration = new Configuration({
@@ -10,28 +12,8 @@ const openai = new OpenAIApi(configuration)
 
 let chatData = ''
 
-// Prompt description
-function getPromptDescription(id) {
-    
-    let desc = ''
-
-    switch(id) {
-        case 'JPN1':
-            desc = 'Chat with AI Friend where your AI Friend respond in cheerful, young lady, Japanese.\n\n'
-            break;
-        case 'ENG2':
-            desc = 'Chat with AI Friend where your AI Friend respond in Shakespearean, old English.\n\n'
-            break;
-        case 'US3':
-            desc = 'Chat with AI Friend where your AI Friend respond in cheerful, Valley girl, American English.\n\n'
-            break;
-        case 'FIL4':
-            desc = 'Chat with AI Friend where your AI Friend respond in cheerful, Filipino.\n\n'
-            break;
-        default:
-    }
-
-    return desc
+function getFriend(id) {
+    return friendList.friends.find((item) => item.id === id)
 }
 
 export default defineEventHandler(async (event) => {
@@ -43,7 +25,9 @@ export default defineEventHandler(async (event) => {
         chatData = ''
     }
 
-    let prompt = getPromptDescription(bot)
+    const friend = getFriend(bot)
+
+    let prompt = friend.prompt
 
     chatData += '\n'
     chatData += `You: ${message}`
@@ -59,8 +43,6 @@ export default defineEventHandler(async (event) => {
         But I do not plan to hit it but put the ceiling a bit much lower then remove
         old messages after it is reached to continue chatting.
         */
-
-        console.log("maximum!", tokenPrompt)
         
         // remove several lines from stored data
         let tmpData = chatData.split("\n").filter((d, i) => i > 20)
@@ -76,14 +58,19 @@ export default defineEventHandler(async (event) => {
             model: "text-davinci-003",
             prompt: prompt,
             temperature: 0.5,
-            max_tokens: 150,
+            max_tokens: 180,
             top_p: 1,
             frequency_penalty: 0.5,
             presence_penalty: 0,
             stop:["You:"]
         })
     
-        reply = completion.data.choices[0].text.split('AI Friend:')[1].trim()
+        reply = completion.data.choices[0].text
+        if(reply.length > 0) {
+            if(reply.indexOf('AI Friend') >= 0) {
+                reply = reply.split('AI Friend:')[1].trim()
+            }
+        }
         
     } catch(error) {
 
