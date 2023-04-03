@@ -33,11 +33,37 @@ Moving forward, my main objective is to be able to transcribed speech into text 
 
 > This is purely a personal coding exercise to get to know `Nuxt 3`.
 
+# Latest Update
+
+I moved friend list and config to json file for convenience. Please check `/assets/friends-list.json`.
+You can now add more friends, modify prompts and tweak voice settings.
+
+```javascript
+{
+"friends": [
+        { 
+            "id": "JPN1",
+            "name": "Japanese (日本語)",
+            "prompt": "Chat with AI Friend where your AI Friend respond in cheerful, young lady, Japanese.\n\n",
+            "voice": "Google 日本語",
+            "pitch": 1.1,
+            "rate": 1.0,
+            "mute": false
+        },
+        ...
+]
+}
+```
+
+I also added `NUXT_PUBLIC_APP_MUTED` in the environment variable to globally disable voice/speech function if you want.
+
+```
+NUXT_PUBLIC_APP_MUTED=false
+```
+
 # Development
 
-> This is a work in progress...
-
-I will be using the latest version of `Nuxt`
+Using the latest version of `Nuxt`
 
 ```sh
 $ npx nuxi init <project-name>
