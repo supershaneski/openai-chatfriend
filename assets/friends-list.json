@@ -25,13 +25,12 @@
             "voice": "Karen",
             "pitch": 1.3,
             "rate": 0.8,
-            "mute": false
+            "mute": true
         },
         { 
             "id": "FIL4",
             "name": "Filipino",
-            "prompt": "Chat with AI Friend where your AI Friend respond in cheerful, Filipino.\n\n",
-            "mute": true
+            "prompt": "Chat with AI Friend where your AI Friend respond in cheerful, Filipino.\n\n"
         }
     ]
 }

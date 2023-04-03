@@ -36,13 +36,18 @@ watch(selectedBot, () => {
 
 const isPlayEnabled = computed(() => {
 
+
+    console.log('global muted', config.public.appMuted)
+    
     let globalMute = config.public.appMuted || false
     if(globalMute) return false
 
     let friend = friendList.friends.find((item) => item.id === selectedBot.value)
     if(!friend) return false
 
-    return friend.mute || !(friend?.voice) ? false : true
+    console.log(friend.name, !(friend?.voice))
+
+    return !(friend?.voice) ? false : true
 })
 
 function scrollToBottom() {
@@ -74,6 +79,8 @@ async function speakMessage(msg) {
     if(!friend) return
 
     if(friend.mute || !(friend?.voice)) return
+
+    console.log("speak")
 
     const utterThis = new SpeechSynthesisUtterance(msg)
     
