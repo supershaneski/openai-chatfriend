@@ -55,6 +55,8 @@ You can now add more friends, modify prompts and tweak voice settings.
 }
 ```
 
+Use this [speech api test page](https://mdn.github.io/dom-examples/web-speech-api/speak-easy-synthesis/) to check your desired voice settings.
+
 If you do not want the reply message to be spoken after receiving but want to play it later, set the property `mute` to true.
 If you do not wish a friend to have voice/speech function at all, just remove the property `voice`.
 
